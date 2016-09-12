@@ -75,6 +75,13 @@ namespace PicklesDoc.Pickles.Extensions
         public static string ToSlug(this string text)
         {
             // remove any accent characters
+
+            // CodePagesEncodingProvider class extends EncodingProvider to make extra code pages available to .NET Core.
+            // See https://github.com/dotnet/corefx/issues/9158 and https://msdn.microsoft.com/en-us/library/mt643901(v=vs.110).aspx
+            // for more information.
+            var encodingProvider = CodePagesEncodingProvider.Instance;
+            Encoding.RegisterProvider(encodingProvider);
+
             var bytes = Encoding.GetEncoding("Cyrillic").GetBytes(text);
             var str = Encoding.ASCII.GetString(bytes);
 

@@ -14,7 +14,8 @@
     "Pickles.ObjectModel": "1.0.0-*",
     "Pickles.TestFrameworks": "1.0.0-*",
     "System.Drawing.Primitives": "4.0.0",
-    "System.IO.Abstractions.NetCore": "1.0.0"
+    "System.IO.Abstractions.NetCore": "1.0.0",
+    "System.Text.Encoding.CodePages": "4.0.1"
   },
 
   "frameworks": {
