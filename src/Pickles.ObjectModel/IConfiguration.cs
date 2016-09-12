@@ -19,7 +19,7 @@
 //  --------------------------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
-using Microsoft.Extensions.FileSystemGlobbing.Abstractions;
+using System.IO.Abstractions;
 
 namespace PicklesDoc.Pickles
 {

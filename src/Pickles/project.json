@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "Autofac": "4.1.0",
+    "FeatureSwitcher.NetCore": "1.0.0",
+    "Gherkin": "4.0.1",
+    "MarkdownDeep.NetCore": "1.0.0",
+    "Microsoft.Extensions.Configuration.Abstractions": "1.0.0",
+    "NDesk.Options.NetCore": "1.0.1",
+    "NETStandard.Library": "1.6.0",
+    "ngenerics.NetCore": "1.0.0",
+    "NLog": "4.4.0-betaV15",
+    "Pickles.ObjectModel": "1.0.0-*",
+    "Pickles.TestFrameworks": "1.0.0-*",
+    "System.Drawing.Primitives": "4.0.0",
+    "System.IO.Abstractions.NetCore": "1.0.0"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  }
+}
