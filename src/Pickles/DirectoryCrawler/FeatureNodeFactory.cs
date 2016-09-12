@@ -19,6 +19,7 @@
 //  --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.IO;
 using System.IO.Abstractions;
 using System.Xml.Linq;
 using PicklesDoc.Pickles.DocumentationBuilders.HTML;
@@ -44,7 +45,7 @@ namespace PicklesDoc.Pickles.DirectoryCrawler
 
         public INode Create(FileSystemInfoBase root, FileSystemInfoBase location)
         {
-            string relativePathFromRoot = root == null ? @".\" : PathExtensions.MakeRelativePath(root, location, this.fileSystem);
+            string relativePathFromRoot = root == null ? Path.DirectorySeparatorChar.ToString() : PathExtensions.MakeRelativePath(root, location, this.fileSystem);
 
             var directory = location as DirectoryInfoBase;
             if (directory != null)

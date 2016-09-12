@@ -19,6 +19,7 @@
 //  --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.IO;
 using System.IO.Abstractions;
 
 namespace PicklesDoc.Pickles.Extensions
@@ -40,8 +41,8 @@ namespace PicklesDoc.Pickles.Extensions
             string fromString = AddTrailingSlashToDirectoriesForUriMethods(from, fileSystem);
             string toString = AddTrailingSlashToDirectoriesForUriMethods(to, fileSystem);
 
-            var fromUri = new Uri(fromString);
-            var toUri = new Uri(toString);
+            var fromUri = UriUtility.CreateSourceUri(fromString);
+            var toUri = UriUtility.CreateSourceUri(toString);
 
             Uri relativeUri = fromUri.MakeRelativeUri(toUri);
             string relativePath = Uri.UnescapeDataString(relativeUri.ToString());
@@ -55,12 +56,12 @@ namespace PicklesDoc.Pickles.Extensions
             // So if its a file then we need to append the \ to make the Uri class recognize it as a directory
             path = RemoveEndSlashSoWeDoNotHaveTwoIfThisIsADirectory(path);
 
-            return fileSystem.Directory.Exists(path) ? path + @"\" : path;
+            return fileSystem.Directory.Exists(path) ? path + Path.DirectorySeparatorChar.ToString() : path;
         }
 
         private static string RemoveEndSlashSoWeDoNotHaveTwoIfThisIsADirectory(string path)
         {
-            return path.TrimEnd('\\');
+            return path.TrimEnd(Path.DirectorySeparatorChar);
         }
 
         public static string MakeRelativePath(FileSystemInfoBase from, FileSystemInfoBase to, IFileSystem fileSystem)

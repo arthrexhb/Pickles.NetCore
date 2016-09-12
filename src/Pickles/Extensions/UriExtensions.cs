@@ -19,6 +19,7 @@
 //  --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.IO;
 using System.IO.Abstractions;
 
 namespace PicklesDoc.Pickles.Extensions
@@ -29,9 +30,9 @@ namespace PicklesDoc.Pickles.Extensions
         {
             string fullName = instance.FullName;
 
-            if (!instance.FullName.EndsWith(@"\"))
+            if (!instance.FullName.EndsWith(Path.DirectorySeparatorChar.ToString()))
             {
-                fullName = fullName + @"\";
+                fullName = fullName + Path.DirectorySeparatorChar.ToString();
             }
 
             return fullName.ToFolderUri();
@@ -63,17 +64,17 @@ namespace PicklesDoc.Pickles.Extensions
 
         public static Uri ToFileUri(this string instance)
         {
-            return new Uri(instance);
+            return UriUtility.CreateSourceUri(instance);
         }
 
         public static Uri ToFolderUri(this string instance)
         {
-            if (!instance.EndsWith(@"\"))
+            if (!instance.EndsWith(Path.DirectorySeparatorChar.ToString()))
             {
-                return new Uri(instance + @"\");
+                return UriUtility.CreateSourceUri(instance + Path.DirectorySeparatorChar.ToString());
             }
 
-            return new Uri(instance);
+            return UriUtility.CreateSourceUri(instance);
         }
 
         public static string GetUriForTargetRelativeToMe(this Uri me, FileSystemInfoBase target, string newExtension)

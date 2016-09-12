@@ -88,7 +88,11 @@ namespace PicklesDoc.Pickles.DocumentationBuilders.HTML
             {
                 this.fileSystem.Directory.CreateDirectory(nodePath);
 
-                htmlFilePath = this.fileSystem.Path.Combine(nodePath, "index.html");
+                if (nodePath == "/")
+                    htmlFilePath = "index.html";
+                else
+                    htmlFilePath = this.fileSystem.Path.Combine(nodePath, "index.html");
+                    
                 this.WriteContentNode(features, node, htmlFilePath);
             }
             else
@@ -100,6 +104,7 @@ namespace PicklesDoc.Pickles.DocumentationBuilders.HTML
 
         private void WriteContentNode(GeneralTree<INode> features, INode node, string htmlFilePath)
         {
+            Console.WriteLine(htmlFilePath);
             // TODO: is this correct way of creating the stream?
             using (var writer = new System.IO.StreamWriter(new FileStream(htmlFilePath, FileMode.Create, FileAccess.ReadWrite)))
             {

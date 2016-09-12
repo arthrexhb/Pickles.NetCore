@@ -23,6 +23,7 @@ using System.IO.Abstractions;
 using System.Xml.Linq;
 using NGenerics.DataStructures.Trees;
 using PicklesDoc.Pickles.DirectoryCrawler;
+using PicklesDoc.Pickles.Extensions;
 
 namespace PicklesDoc.Pickles.DocumentationBuilders.HTML
 {
@@ -66,7 +67,7 @@ namespace PicklesDoc.Pickles.DocumentationBuilders.HTML
             string featureNodeOutputPath = this.fileSystem.Path.Combine(
                 this.configuration.OutputFolder.FullName,
                 featureNode.RelativePathFromRoot);
-            var featureNodeOutputUri = new Uri(featureNodeOutputPath);
+            var featureNodeOutputUri = UriUtility.CreateSourceUri(featureNodeOutputPath);
 
             var container = new XElement(xmlns + "div", new XAttribute("id", "container"));
             container.Add(this.htmlHeaderFormatter.Format());
