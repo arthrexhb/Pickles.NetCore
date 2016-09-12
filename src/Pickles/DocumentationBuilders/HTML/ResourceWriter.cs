@@ -19,7 +19,7 @@
 //  --------------------------------------------------------------------------------------------------------------------
 
 using System;
-using System.Drawing;
+
 // TODO using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Abstractions;
@@ -103,17 +103,14 @@ namespace PicklesDoc.Pickles.DocumentationBuilders.HTML
 
         protected void WriteImage(string folder, string filename)
         {
-            string path = this.fileSystem.Path.Combine(folder, filename);
-
-            // TODO
-            throw new NotImplementedException();
-            /*using (Image image = Image.FromStream(GetResourceStream(this.namespaceOfResources + "img." + filename)))
+            // TODO: was previously using Image class, which is not available in .NET Core at present.
+            using (var input = GetResourceStream(this.namespaceOfResources + "img." + filename))
             {
-                using (var stream = this.fileSystem.File.Create(path))
+                using (var output = this.fileSystem.File.Create(this.fileSystem.Path.Combine(folder, filename)))
                 {
-                    image.Save(stream, ImageFormat.Png);
+                    CopyStream(input, output);
                 }
-            }*/
+            }
         }
 
         protected void WriteScript(string folder, string filename)
