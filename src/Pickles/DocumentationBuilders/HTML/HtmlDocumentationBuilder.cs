@@ -19,6 +19,7 @@
 //  --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.IO;
 using System.IO.Abstractions;
 using System.Reflection;
 using System.Text;
@@ -28,7 +29,6 @@ using NGenerics.Patterns.Visitor;
 using NLog;
 using PicklesDoc.Pickles.DirectoryCrawler;
 using PicklesDoc.Pickles.Extensions;
-using System.IO;
 
 namespace PicklesDoc.Pickles.DocumentationBuilders.HTML
 {
@@ -76,7 +76,12 @@ namespace PicklesDoc.Pickles.DocumentationBuilders.HTML
                 return;
             }
 
-            string nodePath = this.fileSystem.Path.Combine(this.configuration.OutputFolder.FullName, node.RelativePathFromRoot);
+            // If path2 is 'rooted', then Path.Combine returns path2. See http://stackoverflow.com/q/53102/206297.
+            // The root node has a RelativePathFromRoot of '/'.  On Unix, this counts as a rooted path, 
+            // and we end up trying to write index.html to the root of the filesystem.  So trim the leading /.
+            var unrootedRelativePathFromRoot = node.RelativePathFromRoot.TrimStart(Path.DirectorySeparatorChar);
+
+            string nodePath = Path.Combine(this.configuration.OutputFolder.FullName, unrootedRelativePathFromRoot);
             string htmlFilePath;
 
             if (node.NodeType == NodeType.Content)
@@ -88,10 +93,7 @@ namespace PicklesDoc.Pickles.DocumentationBuilders.HTML
             {
                 this.fileSystem.Directory.CreateDirectory(nodePath);
 
-                if (nodePath == "/")
-                    htmlFilePath = "index.html";
-                else
-                    htmlFilePath = this.fileSystem.Path.Combine(nodePath, "index.html");
+                htmlFilePath = this.fileSystem.Path.Combine(nodePath, "index.html");
                     
                 this.WriteContentNode(features, node, htmlFilePath);
             }
@@ -104,7 +106,6 @@ namespace PicklesDoc.Pickles.DocumentationBuilders.HTML
 
         private void WriteContentNode(GeneralTree<INode> features, INode node, string htmlFilePath)
         {
-            Console.WriteLine(htmlFilePath);
             // TODO: is this correct way of creating the stream?
             using (var writer = new System.IO.StreamWriter(new FileStream(htmlFilePath, FileMode.Create, FileAccess.ReadWrite)))
             {
