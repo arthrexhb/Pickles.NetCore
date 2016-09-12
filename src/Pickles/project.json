@@ -5,7 +5,6 @@
     "Autofac": "4.1.0",
     "FeatureSwitcher.NetCore": "1.0.0",
     "Gherkin": "4.0.1",
-    "ImageProcessorCore": "1.0.0-alpha1039",
     "MarkdownDeep.NetCore": "1.0.0",
     "Microsoft.Extensions.Configuration.Abstractions": "1.0.0",
     "NDesk.Options.NetCore": "1.0.1",
