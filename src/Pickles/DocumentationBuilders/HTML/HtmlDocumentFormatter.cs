@@ -19,6 +19,7 @@
 //  --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.IO;
 using System.IO.Abstractions;
 using System.Xml.Linq;
 using NGenerics.DataStructures.Trees;
@@ -64,9 +65,21 @@ namespace PicklesDoc.Pickles.DocumentationBuilders.HTML
         public XDocument Format(INode featureNode, GeneralTree<INode> features, DirectoryInfoBase rootFolder)
         {
             XNamespace xmlns = HtmlNamespace.Xhtml;
+
+            // If path2 is 'rooted', then Path.Combine returns path2. See http://stackoverflow.com/q/53102/206297.
+            // The root node has a RelativePathFromRoot of '/'.  On Unix, this counts as a rooted path, 
+            // and we end up trying to write index.html to the root of the filesystem.  So trim the leading /.
+            var unrootedRelativePathFromRoot = featureNode.RelativePathFromRoot.TrimStart(Path.DirectorySeparatorChar);
+
             string featureNodeOutputPath = this.fileSystem.Path.Combine(
                 this.configuration.OutputFolder.FullName,
-                featureNode.RelativePathFromRoot);
+                unrootedRelativePathFromRoot);
+
+            // If it was the root node, Path.Combine will now have lost the directory separator, which
+            // marks it as a directory.  We need this is order for MakeRelativeUri to work correctly.
+            if (string.IsNullOrWhiteSpace(unrootedRelativePathFromRoot))
+                featureNodeOutputPath += Path.DirectorySeparatorChar;
+
             var featureNodeOutputUri = UriUtility.CreateSourceUri(featureNodeOutputPath);
 
             var container = new XElement(xmlns + "div", new XAttribute("id", "container"));
