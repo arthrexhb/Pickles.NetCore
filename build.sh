@@ -11,10 +11,10 @@ fi
 
 dotnet restore
 
-dotnet build Pickles.ObjectModel
-dotnet build Pickles.TestFrameworks
-dotnet build Pickles
-dotnet build Pickles.CommandLine
+dotnet build src/Pickles.ObjectModel
+dotnet build src/Pickles.TestFrameworks
+dotnet build src/Pickles
+dotnet build src/Pickles.CommandLine
 
 revision=${TRAVIS_JOB_ID:=1}  
 revision=$(printf "%04d" $revision) 
