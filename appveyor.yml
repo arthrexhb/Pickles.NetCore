@@ -1,0 +1,11 @@
+os: Visual Studio 2015
+
+build_script:
+    - ps: dotnet restore
+    - ps: dotnet build src/Pickles.ObjectModel
+    - ps: dotnet build src/Pickles.TestFrameworks
+    - ps: dotnet build src/Pickles
+    - ps: dotnet build src/Pickles.CommandLine
+
+test: off 
+version: 0.0.1.{build}
