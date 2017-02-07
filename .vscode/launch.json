@@ -1,0 +1,24 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": ".NET Core Launch (console)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceRoot}/src/Pickles.CommandLine/bin/Debug/netcoreapp1.0/Pickles.CommandLine.dll",
+            "args": ["-f","/home/neil/Code/fixometer-specs/features/", "-o", "/home/neil/Code/fixometer-specs/output/", "-df", "html"],
+            "cwd": "${workspaceRoot}",
+            "externalConsole": false,
+            "stopAtEntry": true,
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command.pickProcess}"
+        }
+    ]
+}
