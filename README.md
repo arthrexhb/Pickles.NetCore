@@ -15,4 +15,4 @@ I have built custom .NET Core versions of some dependent projects.  These are pu
 
 Example:
 
-    dotnet run --f /home/user/Code/Project/Features --o /home/neil/Code/Projcet/Output/ --df dhtml
+    dotnet run --f /home/user/Code/Project/Features --o /home/user/Code/Projcet/Output/ --df dhtml
